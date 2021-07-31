@@ -59,10 +59,14 @@ More information is only accessible by people who are already enrolled in Term 2
 of CarND. If you are enrolled, see [the project page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/f1820894-8322-4bb3-81aa-b26b3c6dcbaf/lessons/e8235395-22dd-4b87-88e0-d108c5e5bbf4/concepts/6a4d8d42-6a04-4aa6-b284-1697c0fd6562)
 for instructions and the project rubric.
 
-## Hints!
+## Reflection
+### Describe P, I, D components and their effect
+* *Proportional* component is the component that is responsible for steering the car on the center line of the road, if used alone the car overshoot very quickly
+* *Integral* component is the component that is responsible for handling bias and since simulator has no bias these parameter if used alone the car will move in circle
+* *differential* component is the component that is responsible for counter the proportional component when it overshoot 
 
-* You don't have to follow this directory structure, but if you do, your work
-  will span all of the .cpp files here. Keep an eye out for TODOs.
+## How I choose my parameter
+by using trial and error method first I start with zero on all parameter and begin increasing proportional component since this will control if we follow the center line and then begin to increase the differential part also to smooth the control and don't make it overshoot, I didn't update integral part because simulator doesn't have any bias so adding it will make controller worse
 
 ## Call for IDE Profiles Pull Requests
 
