@@ -1,7 +1,7 @@
 project(PID)
 
 cmake_minimum_required (VERSION 3.5)
-
+#  -DWSL_ENABLED
 add_definitions(-std=c++11)
 
 set(CXX_FLAGS "-Wall")

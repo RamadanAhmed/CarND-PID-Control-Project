@@ -37,6 +37,7 @@ int main() {
   /**
    * TODO: Initialize the pid variable.
    */
+  pid.Init(0.15, 0.0, 2.5);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
@@ -54,15 +55,16 @@ int main() {
         if (event == "telemetry") {
           // j[1] is the data JSON object
           double cte = std::stod(j[1]["cte"].get<string>());
-          double speed = std::stod(j[1]["speed"].get<string>());
-          double angle = std::stod(j[1]["steering_angle"].get<string>());
-          double steer_value;
+          //double speed = std::stod(j[1]["speed"].get<string>());
+          //double angle = std::stod(j[1]["steering_angle"].get<string>());
           /**
            * TODO: Calculate steering value here, remember the steering value is
            *   [-1, 1].
            * NOTE: Feel free to play around with the throttle and speed.
            *   Maybe use another PID controller to control the speed!
            */
+          pid.UpdateError(cte);
+          double steer_value = pid.TotalError();
           
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
@@ -94,7 +96,12 @@ int main() {
   });
 
   int port = 4567;
-  if (h.listen(port)) {
+#ifdef WSL_ENABLED
+  auto url = "127.0.0.1";
+  if(h.listen(url, port)) {
+#else
+  if(h.listen(port)) {
+#endif
     std::cout << "Listening to port " << port << std::endl;
   } else {
     std::cerr << "Failed to listen to port" << std::endl;
